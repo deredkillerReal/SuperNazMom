@@ -15,9 +15,45 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Fire",
+                    "name": "Jump",
                     "type": "Button",
-                    "id": "bceb1b80-c7be-418d-ae43-15636bbb42b9",
+                    "id": "52428488-7d00-43c5-8c9d-c1c19313c0ef",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Block",
+                    "type": "Button",
+                    "id": "8709e252-cab9-4ef2-a0c1-4f1b976b4203",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Light",
+                    "type": "Button",
+                    "id": "8c431376-1a16-4197-8e4d-a7e52826e60b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Heavy",
+                    "type": "Button",
+                    "id": "8ad9e401-9654-48a7-9ed0-a7d3749a092c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Special",
+                    "type": "Button",
+                    "id": "a2ec22d3-2d5b-410d-995a-d36c548704af",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -27,15 +63,6 @@
                     "name": "Join",
                     "type": "Button",
                     "id": "a03fa91d-801f-435f-b1f2-4a5027e08100",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Jump",
-                    "type": "Button",
-                    "id": "52428488-7d00-43c5-8c9d-c1c19313c0ef",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -166,61 +193,6 @@
                 },
                 {
                     "name": "",
-                    "id": "adad8439-7dd3-4907-aac4-a453be088447",
-                    "path": "<Keyboard>/x",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard1",
-                    "action": "Fire",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "87e144c6-21e4-4f6e-a1b9-ddcfc8ff27d2",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard1",
-                    "action": "Fire",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "940e1aa1-2eaa-4055-a2a6-0442984c5171",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "Fire",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "bc835741-1f47-43d8-b291-c7cf4849abd0",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard1",
-                    "action": "Join",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "410d77f4-eb55-4437-a47a-0e6160ed650a",
-                    "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "Join",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "a8386a05-a054-4a19-aec1-422cf3366605",
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
@@ -238,6 +210,138 @@
                     "processors": "",
                     "groups": "Keyboard1",
                     "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5b25b11b-f67c-417b-8155-34e3747b3d9a",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard1",
+                    "action": "Light",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c0361ce4-dcc6-4147-88f0-5b3615ba5549",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard1",
+                    "action": "Light",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "74e575f8-3591-4d1e-a7fe-1be778cb704b",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Light",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "85142a8d-8895-4523-ac67-9cb297161357",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard1",
+                    "action": "Heavy",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1487a33e-ccdb-4b91-b011-c0812e866a69",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard1",
+                    "action": "Heavy",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "904b61fc-d6c4-4c0a-8262-31e602e75aa7",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Heavy",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9918fe9f-8a87-4a0b-baf0-3b4f208a1623",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Special",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e4af023a-d4d4-4235-8444-5c6c961c14e7",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard1",
+                    "action": "Special",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bc835741-1f47-43d8-b291-c7cf4849abd0",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard1",
+                    "action": "Join",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "410d77f4-eb55-4437-a47a-0e6160ed650a",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Join",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e4e74d26-a61c-4b3e-b812-c7185a3377e7",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Block",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "899a4346-0279-48b6-915c-dc671c4329f0",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Block",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
