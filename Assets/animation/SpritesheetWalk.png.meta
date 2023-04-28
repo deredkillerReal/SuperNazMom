@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1bad41f07aa0c3d479600f838e21b3e3
+guid: 7a8cb24c7a4c287419e533f93465b15c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,7 +105,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Spritesheet_Punch_0
+      name: SpritesheetWalk_0
       rect:
         serializedVersion: 2
         x: 0
@@ -119,14 +119,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 51a82bea40bc35a4fb008fd452e76fb6
-      internalID: -545953805
+      spriteID: 2f8cc619e9a3fcd488648f0e2caf71f1
+      internalID: 290087454
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spritesheet_Punch_1
+      name: SpritesheetWalk_1
       rect:
         serializedVersion: 2
         x: 1000
@@ -140,14 +140,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0af16394cf579dd40897f42db401f9bd
-      internalID: -1047923465
+      spriteID: 87bf688c97ce40040b87239941007d3d
+      internalID: -2106742355
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spritesheet_Punch_2
+      name: SpritesheetWalk_2
       rect:
         serializedVersion: 2
         x: 2000
@@ -161,14 +161,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 91df81ec8b9617b4293dd208246f6776
-      internalID: 174843405
+      spriteID: 533d811d19896b64f87cd667ed59becd
+      internalID: -2028475203
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spritesheet_Punch_3
+      name: SpritesheetWalk_3
       rect:
         serializedVersion: 2
         x: 3000
@@ -182,14 +182,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 13e1373349c444b46afec250d0ffb733
-      internalID: 587196762
+      spriteID: 9733019984deb0c489cacafabced7eef
+      internalID: 1464635030
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spritesheet_Punch_4
+      name: SpritesheetWalk_4
       rect:
         serializedVersion: 2
         x: 4000
@@ -203,8 +203,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f619e058fc2f3334eadbc334d7c10dd3
-      internalID: 1127825495
+      spriteID: 5be174e0783f2ec43a573415c65ef0bf
+      internalID: -435805035
       vertices: []
       indices: 
       edges: []
@@ -220,11 +220,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Spritesheet_Punch_0: -545953805
-      Spritesheet_Punch_1: -1047923465
-      Spritesheet_Punch_2: 174843405
-      Spritesheet_Punch_3: 587196762
-      Spritesheet_Punch_4: 1127825495
+      SpritesheetWalk_0: 290087454
+      SpritesheetWalk_1: -2106742355
+      SpritesheetWalk_2: -2028475203
+      SpritesheetWalk_3: 1464635030
+      SpritesheetWalk_4: -435805035
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

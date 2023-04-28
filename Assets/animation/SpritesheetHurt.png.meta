@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 55696d27f325da4449d38652caf0733c
+guid: 5bea6b346dbbec643984f2fade932489
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,7 +105,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Spritesheet_Block_0
+      name: SpritesheetHurt_0
       rect:
         serializedVersion: 2
         x: 0
@@ -119,14 +119,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 73a64076a6121cc428bde9cb2ff111d2
-      internalID: -432632175
+      spriteID: ccf6fb9e4c012f040a3f5fa5bc5295fd
+      internalID: 1545255923
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spritesheet_Block_1
+      name: SpritesheetHurt_1
       rect:
         serializedVersion: 2
         x: 1000
@@ -140,14 +140,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d66dc4d824c57444be36179f959cf11
-      internalID: 2060796200
+      spriteID: c3871ca54a524c84e867fa185371bd4f
+      internalID: -918809477
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spritesheet_Block_2
+      name: SpritesheetHurt_2
       rect:
         serializedVersion: 2
         x: 2000
@@ -161,14 +161,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 14ba374febdbfed47a5aedbaf7324087
-      internalID: -1839554993
+      spriteID: e4e28b58234298544864ce8d47ae84c1
+      internalID: -1392676156
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spritesheet_Block_3
+      name: SpritesheetHurt_3
       rect:
         serializedVersion: 2
         x: 3000
@@ -182,29 +182,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6ee0d61a9b0e8494288dc70b55e7c3d2
-      internalID: -236775744
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Spritesheet_Block_4
-      rect:
-        serializedVersion: 2
-        x: 4000
-        y: 0
-        width: 1000
-        height: 1000
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 850fb12a60ef441468aeb39dbae1e78b
-      internalID: -602651445
+      spriteID: 4c214f09fc39c49469f3f1acf2604eeb
+      internalID: -446864006
       vertices: []
       indices: 
       edges: []
@@ -220,11 +199,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Spritesheet_Block_0: -432632175
-      Spritesheet_Block_1: 2060796200
-      Spritesheet_Block_2: -1839554993
-      Spritesheet_Block_3: -236775744
-      Spritesheet_Block_4: -602651445
+      SpritesheetHurt_0: 1545255923
+      SpritesheetHurt_1: -918809477
+      SpritesheetHurt_2: -1392676156
+      SpritesheetHurt_3: -446864006
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

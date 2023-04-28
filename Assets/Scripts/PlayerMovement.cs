@@ -112,6 +112,7 @@ public class PlayerMovement : MonoBehaviour
     public void onJump(InputAction.CallbackContext context)
     {
         //isJump = context.ReadValue<bool>();
+        Debug.Log("jjj");
         Jump();
     }
 
