@@ -1033,6 +1033,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -0.478
       objectReference: {fileID: 0}
+    - target: {fileID: 3746097013251435080, guid: f5c63433a7374e748af4572ec5e35e88, type: 3}
+      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3746097013251435080, guid: f5c63433a7374e748af4572ec5e35e88, type: 3}
+      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3746097013251435081, guid: f5c63433a7374e748af4572ec5e35e88, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1100,6 +1108,10 @@ PrefabInstance:
     - target: {fileID: 3746097013251435082, guid: f5c63433a7374e748af4572ec5e35e88, type: 3}
       propertyPath: m_Offset.y
       value: -0.09020114
+      objectReference: {fileID: 0}
+    - target: {fileID: 3746097013251435083, guid: f5c63433a7374e748af4572ec5e35e88, type: 3}
+      propertyPath: m_Simulated
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3746097013251435084, guid: f5c63433a7374e748af4572ec5e35e88, type: 3}
       propertyPath: m_Name
