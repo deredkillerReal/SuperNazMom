@@ -14,7 +14,6 @@ public class PlayerMovement : MonoBehaviour
 
 
     private Vector2 AxisInput = Vector2.zero;
-    private Vector3 moveDirection = Vector3.zero;
 
     Rigidbody2D rb2D;
     public LayerMask groundLayer;
@@ -56,8 +55,7 @@ public class PlayerMovement : MonoBehaviour
     private void CalculateWalk()
     {
         {
-            _currentHorizontalSpeed = AxisInput.x * Speed * Time.deltaTime;
-            moveDirection.x = _currentHorizontalSpeed * Speed;
+            _currentHorizontalSpeed = AxisInput.x * Speed;
         }
     }
     #endregion
