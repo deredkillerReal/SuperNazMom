@@ -131,7 +131,6 @@ public class PlayerAttack : MonoBehaviour
         public VisualEffect vfx { get; set; }
         public float AttackDelay { get; set; }//after how long should the attack deal damage
         public string animationName { get; set; }
-        //        public string animationName{set();get();};
 
         //float finishedAttackCooldown;
         public AttackStats(float damage, float cooldown, float range, VisualEffect vfx, float AttackDelay, string animationName)
@@ -153,11 +152,11 @@ public class PlayerAttack : MonoBehaviour
         switch (attackToPerform)
         {
             case AttacksSug.Light:
-                stats = new(10, 0.4f, 2, punchEffect.GetComponent<VisualEffect>(), 0.2f, "light");
+                stats = new(10, 0.4f, 2, punchEffect.GetComponent<VisualEffect>(), 0.3f, "light");
 
                 break;
             case AttacksSug.Heavy:
-                stats = new(20, 0.7f, 2, punchEffect.GetComponent<VisualEffect>(), 0.2f, "heavy");
+                stats = new(20, 0.7f, 2, punchEffect.GetComponent<VisualEffect>(), 0.5f, "heavy");
 
                 break;
             case AttacksSug.SpecialDefault:
@@ -189,7 +188,7 @@ public class PlayerAttack : MonoBehaviour
         //object pool vfx
 
         //when availibe need to enable
-        //  animator.SetTrigger(stats.animationName);
+         player.animator.SetTrigger(stats.animationName);
         //  Instantiate(vfx gameObject, transform, true);
 
         Collider2D[] enemiesHit;

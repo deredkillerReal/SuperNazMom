@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     float lastTimeGrounded;
     [SerializeField] UnityEngine.Transform top_left;
     [SerializeField] UnityEngine.Transform bottom_right;
+
     private void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
@@ -44,7 +45,9 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
 
+        player.animator.SetBool("move", (_currentHorizontalSpeed > 0.1||  _currentHorizontalSpeed<-0.1));
         rb2D.velocity = new Vector2(_currentHorizontalSpeed, rb2D.velocity.y);
+        
         flip();
     }
 

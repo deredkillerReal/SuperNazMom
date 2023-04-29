@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 42409384}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.254, z: 0}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -74,15 +74,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 1770436880, guid: c6a5d3aa28d4e904abf59833f6bf49df, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 10, y: 10}
+  m_Size: {x: 10, y: 10.009766}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &42409387
@@ -287,12 +287,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3746097013251435081}
+  - component: {fileID: 3677710987354719929}
   - component: {fileID: 3746097013251435087}
   - component: {fileID: 5613465901854520188}
   - component: {fileID: 3746097013251435080}
   - component: {fileID: 3746097013251435082}
   - component: {fileID: 3746097013251435083}
-  - component: {fileID: 3677710987354719929}
   m_Layer: 7
   m_Name: Capsule
   m_TagString: Untagged
@@ -320,6 +320,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3677710987354719929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3746097013251435084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b1ae2124e76b4f408ab1f124f5a95df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 42409387}
 --- !u!114 &3746097013251435087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,7 +375,6 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
-  animator: {fileID: 0}
   punchEffect: {fileID: 2060951998}
   ve: {fileID: 2060952000}
 --- !u!114 &3746097013251435080
@@ -544,18 +556,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &3677710987354719929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3746097013251435084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b1ae2124e76b4f408ab1f124f5a95df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5216602071671813422
 GameObject:
   m_ObjectHideFlags: 0
