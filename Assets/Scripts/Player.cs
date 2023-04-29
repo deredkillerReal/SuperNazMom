@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
+    public Animator animator;
     private AudioManager audioManager;
     float maxHealth = 100;
     float health = 100;
@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     {
         health += hp;
         Mathf.Clamp(health, 0, maxHealth);
+        Debug.Log(health);
         if (health == 0) Die();
     }
 
