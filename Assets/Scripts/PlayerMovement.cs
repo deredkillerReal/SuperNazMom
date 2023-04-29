@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 using System;
 using UnityEngine.UIElements.Experimental;
 using UnityEngine.InputSystem.XR;
+using UnityEditor.Rendering;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -73,19 +74,19 @@ public class PlayerMovement : MonoBehaviour
 
         }
     }
+    public bool CheckIfGrounded()
+    {
+        return Physics2D.OverlapArea(top_left.position, bottom_right.position, groundLayer);
+    }
     private void CalculateJump()
     {
-        bool CheckIfGrounded()
-        {
-            return Physics2D.OverlapArea(top_left.position, bottom_right.position, groundLayer);
-        }
 
         if (CheckIfGrounded())
         {
             lastTimeGrounded = Time.time;
             isJumping = false;
         }
-        if (Time.time - lastTimeGrounded < 0.15 && !isJumping)
+        if (Time.time - lastTimeGrounded < 0.10 && !isJumping)
         {
             canJump = true;
         }
@@ -95,10 +96,11 @@ public class PlayerMovement : MonoBehaviour
 
     void flip()
     {
-        int x = 0;
+        float x = 0;
         if (rb2D.velocity.x == 0) return;
-        else if (rb2D.velocity.x > 0) x = 1;
-        else x = -1;
+        else if (rb2D.velocity.x > 0) x = MathF.Max(gameObject.transform.localScale.x, -gameObject.transform.localScale.x);
+        else x = MathF.Min(gameObject.transform.localScale.x, -gameObject.transform.localScale.x);
+        
         transform.localScale = new Vector3(x, transform.localScale.y, transform.localScale.z);
 
     }
