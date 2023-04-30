@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     public void changeHealth(float hp)
     {
         health += hp;
-        Mathf.Clamp(health, 0, maxHealth);
+        health = Mathf.Max(health, 0);
         Debug.Log(health);
         if (health == 0) Die();
     }
@@ -36,7 +36,9 @@ public class Player : MonoBehaviour
         GetComponent<Collider2D>().enabled = false;
 
         Debug.LogError("yaYEET");
-        Destroy(gameObject);
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        animator.SetTrigger("die");
+        //Destroy(gameObject);
     }
 
 

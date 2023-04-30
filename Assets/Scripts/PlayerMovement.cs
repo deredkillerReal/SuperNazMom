@@ -45,9 +45,9 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
 
-        player.animator.SetBool("move", (_currentHorizontalSpeed > 0.1||  _currentHorizontalSpeed<-0.1));
+        player.animator.SetBool("move", (_currentHorizontalSpeed > 0.1 || _currentHorizontalSpeed < -0.1));
         rb2D.velocity = new Vector2(_currentHorizontalSpeed, rb2D.velocity.y);
-        
+
         flip();
     }
 
@@ -74,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
             rb2D.velocity = new Vector2(rb2D.velocity.x, jumpForce);
             isJumping = true;
             canJump = false;
-
+            player.animator.SetTrigger("jump");
         }
     }
     public bool CheckIfGrounded()
@@ -103,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
         if (rb2D.velocity.x == 0) return;
         else if (rb2D.velocity.x > 0) x = MathF.Max(gameObject.transform.localScale.x, -gameObject.transform.localScale.x);
         else x = MathF.Min(gameObject.transform.localScale.x, -gameObject.transform.localScale.x);
-        
+
         transform.localScale = new Vector3(x, transform.localScale.y, transform.localScale.z);
 
     }
@@ -115,7 +115,6 @@ public class PlayerMovement : MonoBehaviour
     public void onJump(InputAction.CallbackContext context)
     {
         //isJump = context.ReadValue<bool>();
-        Debug.Log("jjj");
         Jump();
     }
 
