@@ -213,23 +213,12 @@ public class PlayerAttack : MonoBehaviour
 
     void Block()
     {
-        Debug.Log("blockiing");
+        player.animator.SetTrigger("block");
     }
 
     public void onBlock(InputAction.CallbackContext context)
     {
-
         Block();
-
-
-        Dictionary<AttacksSug, AttacksSug[]> SpecialMoves = new Dictionary<AttacksSug, AttacksSug[]>();
-        //SpecialMoves.Add(AttacksSug.a, new AttacksSug[] { AttacksSug. , AttacksSug. , AttacksSug. }); //adding a key/value using the Add() method
-
-        SpecialMoves.Add(AttacksSug.Stab, new AttacksSug[] { AttacksSug.Light, AttacksSug.Light, AttacksSug.Light });
-        SpecialMoves.Add(AttacksSug.SuperHeavy, new AttacksSug[] { AttacksSug.Heavy, AttacksSug.Heavy, AttacksSug.Heavy });
-        SpecialMoves.Add(AttacksSug.Stomp, new AttacksSug[] { AttacksSug.Light, AttacksSug.Heavy, AttacksSug.Light });
-
-
     }
     public void onHeavy(InputAction.CallbackContext context)
     {
