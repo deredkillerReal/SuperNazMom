@@ -2,19 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
-//using static PlayerAttack;
 using UnityEngine.Experimental.VFX;
 using UnityEngine.VFX;
-using Unity.Collections;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
-
+using UnityEngine.Pool;
 public class PlayerAttack : MonoBehaviour
 {
+    private ObjectPool<GameObject> pool;
+    [SerializeField] float aaa;
     [SerializeField] AttackStats canISerializeThis;
     [Header("DEBUG")]
     [SerializeField] AttacksSug a;
@@ -23,6 +19,8 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] bool debugbutton = false;
 
     private AttacksSug attackToQueue = AttacksSug.Empty;
+    private Coroutine QueueCoroutine;
+    private bool shouldStopCoroutine = false;
     [SerializeField] UnityEngine.Transform attackPoint;
     [SerializeField] float attackRange = 0.5f;
     [SerializeField] int attackDamage = 25;
@@ -38,29 +36,34 @@ public class PlayerAttack : MonoBehaviour
     ComboManager comboManager;
 
     [SerializeField] GameObject punchEffect;
+    [SerializeField] private VisualEffect ve;
 
     void Start()
     {
+        /*pool = new ObjectPool<GameObject>(
+            () =>{ return Instantiate(punchEffect); },
+            effect => { effect.SetActive(true); },
+            effect => { effect.SetActive(false); },
+            effect => { Destroy(gameObject); },
+            true, 6);*/
         player = GetComponent<Player>();
-        Invoke("shet", 0.5f);
+        Invoke("initiateComboManager", 0.1f);
     }
-    void shet()
+
+    void initiateComboManager()
     {
         Dictionary<AttacksSug, AttacksSug[]> specialMovesPPP = new Dictionary<AttacksSug, AttacksSug[]>();
 
         comboManager = new ComboManager(specialMovesPPP);
+        QueueCoroutine = StartCoroutine(CheckAttackqueue());
 
     }
-
-    [SerializeField] private VisualEffect ve;
-
     void Update()
     {
         //this is for Debugging purposes
         if (debugbutton)
         {
             debugbutton = false;
-            //comboManager = new ComboManager();
             comboManager.addAttack(a);
             comboManager.addAttack(b);
             comboManager.addAttack(c);
@@ -69,13 +72,12 @@ public class PlayerAttack : MonoBehaviour
         }
 
 
-        if (attackToQueue != AttacksSug.Empty)
-        {
-            AttackManager(attackToQueue);
-        }
+        //if (attackToQueue != AttacksSug.Empty)
+        //{
+        //    AttackManager(attackToQueue);
+        //}
 
     }
-
 
 
 
@@ -89,11 +91,15 @@ public class PlayerAttack : MonoBehaviour
                 return;
 
             case 0://attack needs to be queued
-                attackToQueue = inputAttack;
-                //start co-routine with the code in update for the attackqueue
+                 {
+                    attackToQueue = inputAttack;
+                    if (shouldStopCoroutine) StopCoroutine(QueueCoroutine);
+
+                    QueueCoroutine = StartCoroutine(CheckAttackqueue());
+                }
                 break;
             case 1:
-
+                if (shouldStopCoroutine) StopCoroutine(QueueCoroutine);
                 bool breakCombo = (Time.time - TimeLastAttack > timeToBreakCombo);
                 if (breakCombo) comboManager.clearArray();
                 comboManager.addAttack(inputAttack);
@@ -104,6 +110,14 @@ public class PlayerAttack : MonoBehaviour
         }
 
 
+    }
+    IEnumerator CheckAttackqueue()
+    {
+        while (attackToQueue != AttacksSug.Empty)
+        {
+            AttackManager(attackToQueue);
+            yield return null;
+        }
     }
 
     int checkCanAttack()
@@ -146,13 +160,11 @@ public class PlayerAttack : MonoBehaviour
     }
     void Attack(AttacksSug attackToPerform)
     {
-        //AttacksSug[] keysa = specialMoves.Keys.ToArray<AttacksSug>();
-        //string[] keys = (string[])Enum.GetNames(typeof(AttacksSug));
         AttackStats stats;
         switch (attackToPerform)
         {
             case AttacksSug.Light:
-                stats = new(10, 0.4f, 2, punchEffect.GetComponent<VisualEffect>(), 0.3f, "light");
+                stats = new(10, 0.55f, 2, punchEffect.GetComponent<VisualEffect>(), 0.55f, "light");
 
                 break;
             case AttacksSug.Heavy:
@@ -163,16 +175,16 @@ public class PlayerAttack : MonoBehaviour
                 stats = new(15f, 1f, 8, punchEffect.GetComponent<VisualEffect>(), 0.3f, "special");
                 break;
             case AttacksSug.Stab:
-                stats = new(20, 0.8f, 2, punchEffect.GetComponent<VisualEffect>(), 0, "stab");
+                stats = new(20, 0.8f, 2, punchEffect.GetComponent<VisualEffect>(), 1f, "stab");
                 break;
             case AttacksSug.Stomp:
-                stats = new(20, 0.9f, 2, punchEffect.GetComponent<VisualEffect>(), 0, "stomp");
+                stats = new(20, 0.9f, 2, punchEffect.GetComponent<VisualEffect>(), 1f, "stomp");
                 break;
             case AttacksSug.StompExtended:
-                stats = new(20, 0.9f, 2, punchEffect.GetComponent<VisualEffect>(), 0, "super stomp");
+                stats = new(20, 0.9f, 2, punchEffect.GetComponent<VisualEffect>(), 1f, "super stomp");
                 break;
             case AttacksSug.SuperHeavy:
-                stats = new(20, 1.5f, 2, punchEffect.GetComponent<VisualEffect>(), 0, "super heavy");
+                stats = new(20, 1.5f, 2, punchEffect.GetComponent<VisualEffect>(), 1f, "super heavy");
                 break;
             default:
                 stats = new(0, 0f, 0, punchEffect.GetComponent<VisualEffect>(), 0, "light");
@@ -183,31 +195,32 @@ public class PlayerAttack : MonoBehaviour
         }
         attackRange = stats.range;
 
+        player.animator.SetTrigger(stats.animationName);
+        StartCoroutine(attackCoroutine(stats, attackToPerform));
+        AttackCooldownIn = Time.time + stats.cooldown;
+        TimeLastAttack = Time.time;
+    }
+    IEnumerator attackCoroutine(AttackStats stats, AttacksSug toPerform)
+    {
+        yield return new WaitForSeconds(stats.AttackDelay);
         ve.Play();
-        Instantiate(punchEffect, transform, true);
-        //object pool vfx
-
-        //when availibe need to enable
-         player.animator.SetTrigger(stats.animationName);
-        //  Instantiate(vfx gameObject, transform, true);
-
         Collider2D[] enemiesHit;
-        if (attackToPerform == AttacksSug.SpecialDefault)
-            enemiesHit = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x + stats.range, transform.position.y - 0.8f),enemyLayer);
+        if (toPerform == AttacksSug.SpecialDefault)
+            enemiesHit = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x + stats.range, transform.position.y - 0.8f), enemyLayer);
         else
             enemiesHit = Physics2D.OverlapCircleAll(attackPoint.position, stats.range, enemyLayer);
-       
+
         foreach (Collider2D enemy in enemiesHit)
         {
             if (enemy.gameObject != gameObject)
             {
                 //if(animator.GetFloat("AttackWindow")>0f);
                 enemy.GetComponent<Player>().changeHealth(-stats.damage);
-                //enemy.GetComponent<PlayerAttack>().animator.SetTrigger("hurt");
+                enemy.GetComponent<Player>().animator.SetTrigger("hurt");
             }
         }
-        AttackCooldownIn = Time.time + stats.cooldown;
-        TimeLastAttack = Time.time;
+
+
     }
 
 
@@ -222,12 +235,7 @@ public class PlayerAttack : MonoBehaviour
         Block();
 
 
-        Dictionary<AttacksSug, AttacksSug[]> SpecialMoves = new Dictionary<AttacksSug, AttacksSug[]>();
-        //SpecialMoves.Add(AttacksSug.a, new AttacksSug[] { AttacksSug. , AttacksSug. , AttacksSug. }); //adding a key/value using the Add() method
 
-        SpecialMoves.Add(AttacksSug.Stab, new AttacksSug[] { AttacksSug.Light, AttacksSug.Light, AttacksSug.Light });
-        SpecialMoves.Add(AttacksSug.SuperHeavy, new AttacksSug[] { AttacksSug.Heavy, AttacksSug.Heavy, AttacksSug.Heavy });
-        SpecialMoves.Add(AttacksSug.Stomp, new AttacksSug[] { AttacksSug.Light, AttacksSug.Heavy, AttacksSug.Light });
 
 
     }
@@ -276,14 +284,10 @@ public class PlayerAttack : MonoBehaviour
     private class ComboManager
     {
         AttacksSug[] attackQueue = new AttacksSug[3];
-        public static ComboManager comboManager;
         public Dictionary<AttacksSug, AttacksSug[]> specialMoves = new Dictionary<AttacksSug, AttacksSug[]>();
 
         public ComboManager(Dictionary<AttacksSug, AttacksSug[]> specialMovesPlayer)
         {
-            //if (comboManager != null) { Debug.Log("comboManager has already spawned"); return; }
-            //else comboManager = this;
-
             clearArray();
 
 
@@ -317,7 +321,6 @@ public class PlayerAttack : MonoBehaviour
             //Debug.Log(attackQueue[0] + "," + attackQueue[1] + "," + attackQueue[2]);
 
 
-            //iterates over every key in the dictionary
             for (int i = 0; i < keys.Length; i++)
             {
 
@@ -336,20 +339,9 @@ public class PlayerAttack : MonoBehaviour
             }
             //Debug.Log("no combo only last attack");
             return getLastAttack();
-
-
-
-            //Debug.Log(attackQueue[i]+"   "+ specialMoves[AttacksSug.Stab][i]);
-
-
-
-
         }
         public void clearArray()
         {
-
-            /*break combo*/
-            //Array.Fill(attackQueue, AttacksSug.Empty,);
             attackQueue = Enumerable.Repeat(AttacksSug.Empty, attackQueue.Length).ToArray();
         }
         private AttacksSug getLastAttack()
