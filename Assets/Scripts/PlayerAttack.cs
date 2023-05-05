@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 using UnityEngine.Experimental.VFX;
 using UnityEngine.VFX;
 using UnityEngine.Pool;
+using static UnityEngine.Rendering.DebugUI;
+
 public class PlayerAttack : MonoBehaviour
 {
     private ObjectPool<GameObject> pool;
@@ -20,7 +22,6 @@ public class PlayerAttack : MonoBehaviour
 
     private AttacksSug attackToQueue = AttacksSug.Empty;
     private Coroutine QueueCoroutine;
-    private bool shouldStopCoroutine = false;
     [SerializeField] UnityEngine.Transform attackPoint;
     [SerializeField] float attackRange = 0.5f;
     [SerializeField] int attackDamage = 25;
@@ -35,8 +36,8 @@ public class PlayerAttack : MonoBehaviour
     Player player;
     ComboManager comboManager;
 
-    [SerializeField] GameObject punchEffect;
-    [SerializeField] private VisualEffect ve;
+    [SerializeField] private VisualEffect punchVE;
+    [SerializeField] private VisualEffect lazerVE;
 
     void Start()
     {
@@ -55,7 +56,7 @@ public class PlayerAttack : MonoBehaviour
         Dictionary<AttacksSug, AttacksSug[]> specialMovesPPP = new Dictionary<AttacksSug, AttacksSug[]>();
 
         comboManager = new ComboManager(specialMovesPPP);
-        QueueCoroutine = StartCoroutine(CheckAttackqueue());
+        //QueueCoroutine = StartCoroutine(CheckAttackqueue());
 
     }
     void Update()
@@ -71,14 +72,11 @@ public class PlayerAttack : MonoBehaviour
             Attack(ass);
         }
 
-
-        //if (attackToQueue != AttacksSug.Empty)
-        //{
-        //    AttackManager(attackToQueue);
-        //}
-
     }
-
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
 
 
     void AttackManager(AttacksSug inputAttack)
@@ -91,19 +89,21 @@ public class PlayerAttack : MonoBehaviour
                 return;
 
             case 0://attack needs to be queued
-                 {
+                {
+                    if (attackToQueue == AttacksSug.Empty)
+                    {
+                        QueueCoroutine = StartCoroutine(CheckAttackqueue(-(Time.time - AttackCooldownIn)));//should start the coroutine when current attack ends
+                    }
                     attackToQueue = inputAttack;
-                    if (shouldStopCoroutine) StopCoroutine(QueueCoroutine);
-
-                    QueueCoroutine = StartCoroutine(CheckAttackqueue());
                 }
                 break;
             case 1:
-                if (shouldStopCoroutine) StopCoroutine(QueueCoroutine);
                 bool breakCombo = (Time.time - TimeLastAttack > timeToBreakCombo);
                 if (breakCombo) comboManager.clearArray();
                 comboManager.addAttack(inputAttack);
                 Attack(comboManager.calculateAttack());
+
+
 
                 attackToQueue = AttacksSug.Empty;
                 break;
@@ -111,8 +111,11 @@ public class PlayerAttack : MonoBehaviour
 
 
     }
-    IEnumerator CheckAttackqueue()
+    IEnumerator CheckAttackqueue(float waitTime)
     {
+        yield return new WaitForSeconds(waitTime);
+        AttackManager(attackToQueue);
+
         while (attackToQueue != AttacksSug.Empty)
         {
             AttackManager(attackToQueue);
@@ -145,9 +148,9 @@ public class PlayerAttack : MonoBehaviour
         public VisualEffect vfx { get; set; }
         public float AttackDelay { get; set; }//after how long should the attack deal damage
         public string animationName { get; set; }
-
-        //float finishedAttackCooldown;
-        public AttackStats(float damage, float cooldown, float range, VisualEffect vfx, float AttackDelay, string animationName)
+        public string AudioClipName { get; set; }
+        
+        public AttackStats(float damage, float cooldown, float range, VisualEffect vfx, float AttackDelay, string animationName,string clipName)
         {
             this.damage = damage;
             this.cooldown = cooldown;
@@ -155,39 +158,38 @@ public class PlayerAttack : MonoBehaviour
             this.vfx = vfx;
             this.AttackDelay = AttackDelay;
             this.animationName = animationName;
-
+            AudioClipName = clipName;
         }
     }
     void Attack(AttacksSug attackToPerform)
     {
         AttackStats stats;
+        string attackName = Enum.GetName(typeof(AttacksSug), attackToPerform).ToLower();
         switch (attackToPerform)
         {
             case AttacksSug.Light:
-                stats = new(10, 0.55f, 2, punchEffect.GetComponent<VisualEffect>(), 0.55f, "light");
-
+                stats = new(10, 0.55f, 2, punchVE, 0.55f, attackName,attackName);
                 break;
             case AttacksSug.Heavy:
-                stats = new(20, 0.7f, 2, punchEffect.GetComponent<VisualEffect>(), 0.5f, "heavy");
-
+                stats = new(20, 0.7f, 2, punchVE, 0.5f, attackName, attackName);
                 break;
             case AttacksSug.SpecialDefault:
-                stats = new(15f, 1f, 8, punchEffect.GetComponent<VisualEffect>(), 0.3f, "special");
+                stats = new(15f, 3f, 8, lazerVE, 0.5f,attackName , attackName);
                 break;
             case AttacksSug.Stab:
-                stats = new(20, 0.8f, 2, punchEffect.GetComponent<VisualEffect>(), 1f, "stab");
+                stats = new(20, 0.8f, 2, punchVE, 1f, attackName,attackName);
                 break;
             case AttacksSug.Stomp:
-                stats = new(20, 0.9f, 2, punchEffect.GetComponent<VisualEffect>(), 1f, "stomp");
+                stats = new(20, 0.9f, 2, punchVE, 1f, attackName,attackName);
                 break;
             case AttacksSug.StompExtended:
-                stats = new(20, 0.9f, 2, punchEffect.GetComponent<VisualEffect>(), 1f, "super stomp");
+                stats = new(20, 0.9f, 2, punchVE, 1f,attackName , attackName);
                 break;
             case AttacksSug.SuperHeavy:
-                stats = new(20, 1.5f, 2, punchEffect.GetComponent<VisualEffect>(), 1f, "super heavy");
+                stats = new(20, 1.5f, 2, punchVE, 1f, attackName, attackName);
                 break;
             default:
-                stats = new(0, 0f, 0, punchEffect.GetComponent<VisualEffect>(), 0, "light");
+                stats = new(0, 0f, 0, punchVE, 0, "light", "light");
                 Debug.LogError("wtf this aint supposed to happen" + attackToPerform);
                 break;
 
@@ -196,19 +198,26 @@ public class PlayerAttack : MonoBehaviour
         attackRange = stats.range;
 
         player.animator.SetTrigger(stats.animationName);
+        player.audioManager.Play(stats.AudioClipName);
         StartCoroutine(attackCoroutine(stats, attackToPerform));
+
         AttackCooldownIn = Time.time + stats.cooldown;
         TimeLastAttack = Time.time;
     }
     IEnumerator attackCoroutine(AttackStats stats, AttacksSug toPerform)
     {
         yield return new WaitForSeconds(stats.AttackDelay);
-        ve.Play();
         Collider2D[] enemiesHit;
         if (toPerform == AttacksSug.SpecialDefault)
+        {
             enemiesHit = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x + stats.range, transform.position.y - 0.8f), enemyLayer);
+            lazerVE.Play();
+        }
         else
+        {
+            punchVE.Play();
             enemiesHit = Physics2D.OverlapCircleAll(attackPoint.position, stats.range, enemyLayer);
+        }
 
         foreach (Collider2D enemy in enemiesHit)
         {
@@ -226,12 +235,19 @@ public class PlayerAttack : MonoBehaviour
 
     void Block()
     {
-        player.animator.SetTrigger("block");
+
+        player.animator.SetBool("block", true);
     }
 
     public void onBlock(InputAction.CallbackContext context)
     {
-        Block();
+        if (context.performed)
+        {
+            Block();
+        }
+        if (context.canceled) {
+            player.animator.SetBool("block",false);
+        }
     }
     public void onHeavy(InputAction.CallbackContext context)
     {

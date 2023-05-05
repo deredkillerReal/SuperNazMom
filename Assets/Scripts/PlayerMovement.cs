@@ -26,12 +26,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] UnityEngine.Transform top_left;
     [SerializeField] UnityEngine.Transform bottom_right;
 
+
     private void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
         player = GetComponent<Player>();
         lastTimeGrounded = Time.time;
-
     }
 
     void Update()
@@ -74,12 +74,14 @@ public class PlayerMovement : MonoBehaviour
             rb2D.velocity = new Vector2(rb2D.velocity.x, jumpForce);
             isJumping = true;
             canJump = false;
+
             player.animator.SetTrigger("jump");
         }
     }
     public bool CheckIfGrounded()
     {
-        return Physics2D.OverlapArea(top_left.position, bottom_right.position, groundLayer);
+        bool isGrounded= Physics2D.OverlapArea(top_left.position, bottom_right.position, groundLayer);
+        return isGrounded;
     }
     private void CalculateJump()
     {
