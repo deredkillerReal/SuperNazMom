@@ -149,8 +149,8 @@ public class PlayerAttack : MonoBehaviour
         public float AttackDelay { get; set; }//after how long should the attack deal damage
         public string animationName { get; set; }
         public string AudioClipName { get; set; }
-        
-        public AttackStats(float damage, float cooldown, float range, VisualEffect vfx, float AttackDelay, string animationName,string clipName)
+
+        public AttackStats(float damage, float cooldown, float range, VisualEffect vfx, float AttackDelay, string animationName, string clipName)
         {
             this.damage = damage;
             this.cooldown = cooldown;
@@ -164,36 +164,34 @@ public class PlayerAttack : MonoBehaviour
     void Attack(AttacksSug attackToPerform)
     {
         AttackStats stats;
-        string attackName = Enum.GetName(typeof(AttacksSug), attackToPerform).ToLower();
+        string attackName = Enum.GetName(typeof(AttacksSug), attackToPerform);
         switch (attackToPerform)
         {
             case AttacksSug.Light:
-                stats = new(10, 0.55f, 2, punchVE, 0.55f, attackName,attackName);
+                stats = new(10, 0.55f, 2, punchVE, 0.55f, attackName, attackName);
                 break;
             case AttacksSug.Heavy:
-                stats = new(20, 0.7f, 2, punchVE, 0.5f, attackName, attackName);
+                stats = new(20, 0.7f, 2, punchVE, 0.5f, attackName, "Light");
                 break;
             case AttacksSug.SpecialDefault:
-                stats = new(15f, 3f, 8, lazerVE, 0.5f,attackName , attackName);
+                stats = new(15f, 3f, 8, lazerVE, 0.5f, attackName, attackName);
                 break;
             case AttacksSug.Stab:
-                stats = new(20, 0.8f, 2, punchVE, 1f, attackName,attackName);
+                stats = new(20, 0.8f, 2, punchVE, 1f, attackName, attackName);
                 break;
             case AttacksSug.Stomp:
-                stats = new(20, 0.9f, 2, punchVE, 1f, attackName,attackName);
+                stats = new(20, 0.9f, 2, punchVE, 1f, attackName, attackName);
                 break;
             case AttacksSug.StompExtended:
-                stats = new(20, 0.9f, 2, punchVE, 1f,attackName , attackName);
+                stats = new(20, 0.9f, 2, punchVE, 1f, attackName, "Light");
                 break;
             case AttacksSug.SuperHeavy:
-                stats = new(20, 1.5f, 2, punchVE, 1f, attackName, attackName);
+                stats = new(20, 1.5f, 2, punchVE, 1f, attackName, "Light");
                 break;
             default:
                 stats = new(0, 0f, 0, punchVE, 0, "light", "light");
                 Debug.LogError("wtf this aint supposed to happen" + attackToPerform);
                 break;
-
-
         }
         attackRange = stats.range;
 
@@ -210,7 +208,7 @@ public class PlayerAttack : MonoBehaviour
         Collider2D[] enemiesHit;
         if (toPerform == AttacksSug.SpecialDefault)
         {
-            enemiesHit = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x + stats.range, transform.position.y - 0.8f), enemyLayer);
+            enemiesHit = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x + stats.range, transform.position.y - 0.8f) * transform.localScale.x, enemyLayer);
             lazerVE.Play();
         }
         else
@@ -225,7 +223,7 @@ public class PlayerAttack : MonoBehaviour
             {
                 //if(animator.GetFloat("AttackWindow")>0f);
                 enemy.GetComponent<Player>().changeHealth(-stats.damage);
-                enemy.GetComponent<Player>().animator.SetTrigger("hurt");
+                GameObject.Find("Player Manager").GetComponent<PlayerManager>().checkForWin();
             }
         }
 
@@ -236,7 +234,6 @@ public class PlayerAttack : MonoBehaviour
     void Block()
     {
 
-        player.animator.SetBool("block", true);
     }
 
     public void onBlock(InputAction.CallbackContext context)
@@ -245,8 +242,9 @@ public class PlayerAttack : MonoBehaviour
         {
             Block();
         }
-        if (context.canceled) {
-            player.animator.SetBool("block",false);
+        if (context.canceled)
+        {
+            Debug.Log("stopped");
         }
     }
     public void onHeavy(InputAction.CallbackContext context)

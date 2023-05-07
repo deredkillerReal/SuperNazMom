@@ -293,7 +293,6 @@ GameObject:
   - component: {fileID: 3746097013251435080}
   - component: {fileID: 3746097013251435082}
   - component: {fileID: 3746097013251435083}
-  - component: {fileID: 8731820636479786435}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -335,6 +334,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 42409387}
+  audioManager: {fileID: 0}
+  winscreen: {fileID: 0}
   debugDamagePlayer: 0
 --- !u!114 &3746097013251435087
 MonoBehaviour:
@@ -560,18 +561,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &8731820636479786435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3746097013251435084}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 584dfa7f91d8f8e409dddfed127191c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4005657024910529303
 GameObject:
   m_ObjectHideFlags: 0

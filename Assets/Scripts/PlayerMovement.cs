@@ -75,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
             isJumping = true;
             canJump = false;
 
+            player.audioManager.Play("Jump");
             player.animator.SetTrigger("jump");
         }
     }
