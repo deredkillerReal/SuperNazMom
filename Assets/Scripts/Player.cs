@@ -81,7 +81,7 @@ public class Player : MonoBehaviour
 
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         Debug.LogError("yaYEET am die");
-        animator.SetTrigger("die");
+        animator.SetTrigger("Die");
         //Destroy(gameObject);
     }
 

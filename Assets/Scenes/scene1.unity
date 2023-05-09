@@ -1973,10 +1973,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3677710987354719929, guid: f5c63433a7374e748af4572ec5e35e88, type: 3}
-      propertyPath: winscreen
-      value: 
-      objectReference: {fileID: 774872305}
     - target: {fileID: 3746097013251435081, guid: f5c63433a7374e748af4572ec5e35e88, type: 3}
       propertyPath: m_RootOrder
       value: 3

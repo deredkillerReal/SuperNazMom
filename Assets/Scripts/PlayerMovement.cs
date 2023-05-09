@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
 
-        player.animator.SetBool("move", (_currentHorizontalSpeed > 0.1 || _currentHorizontalSpeed < -0.1));
+        player.animator.SetBool("Move", (_currentHorizontalSpeed > 0.1 || _currentHorizontalSpeed < -0.1));
         rb2D.velocity = new Vector2(_currentHorizontalSpeed, rb2D.velocity.y);
 
         flip();
@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
             canJump = false;
 
             player.audioManager.Play("Jump");
-            player.animator.SetTrigger("jump");
+            player.animator.SetTrigger("Jump");
         }
     }
     public bool CheckIfGrounded()

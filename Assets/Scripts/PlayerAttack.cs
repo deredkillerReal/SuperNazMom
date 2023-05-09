@@ -38,6 +38,7 @@ public class PlayerAttack : MonoBehaviour
 
     [SerializeField] private VisualEffect punchVE;
     [SerializeField] private VisualEffect lazerVE;
+    [SerializeField] private VisualEffect heavyVE;
 
     void Start()
     {
@@ -165,28 +166,32 @@ public class PlayerAttack : MonoBehaviour
     {
         AttackStats stats;
         string attackName = Enum.GetName(typeof(AttacksSug), attackToPerform);
+        VisualEffect VeToPlay = punchVE;
         switch (attackToPerform)
         {
             case AttacksSug.Light:
                 stats = new(10, 0.55f, 2, punchVE, 0.55f, attackName, attackName);
+                VeToPlay = punchVE;
                 break;
             case AttacksSug.Heavy:
                 stats = new(20, 0.7f, 2, punchVE, 0.5f, attackName, "Light");
+                VeToPlay = heavyVE;
                 break;
             case AttacksSug.SpecialDefault:
-                stats = new(15f, 3f, 8, lazerVE, 0.5f, attackName, attackName);
+                stats = new(15, 2f, 8, lazerVE, 0.5f, attackName, attackName);
+                VeToPlay = lazerVE;
                 break;
             case AttacksSug.Stab:
-                stats = new(20, 0.8f, 2, punchVE, 1f, attackName, attackName);
+                stats = new(20, 0.6f, 2, punchVE, 0.25f, attackName, attackName);
                 break;
             case AttacksSug.Stomp:
-                stats = new(20, 0.9f, 2, punchVE, 1f, attackName, attackName);
+                stats = new(20, 1, 2, punchVE, 1f, attackName, attackName);
                 break;
             case AttacksSug.StompExtended:
-                stats = new(20, 0.9f, 2, punchVE, 1f, attackName, "Light");
+                stats = new(20, 1, 2, punchVE, 0.5f, attackName, "Light");
                 break;
             case AttacksSug.SuperHeavy:
-                stats = new(20, 1.5f, 2, punchVE, 1f, attackName, "Light");
+                stats = new(30, 1, 2, punchVE, 0.5f, attackName, "Light");
                 break;
             default:
                 stats = new(0, 0f, 0, punchVE, 0, "light", "light");
@@ -197,25 +202,27 @@ public class PlayerAttack : MonoBehaviour
 
         player.animator.SetTrigger(stats.animationName);
         player.audioManager.Play(stats.AudioClipName);
-        StartCoroutine(attackCoroutine(stats, attackToPerform));
+        StartCoroutine(attackCoroutine(stats, attackToPerform, VeToPlay));
 
         AttackCooldownIn = Time.time + stats.cooldown;
         TimeLastAttack = Time.time;
     }
-    IEnumerator attackCoroutine(AttackStats stats, AttacksSug toPerform)
+    IEnumerator attackCoroutine(AttackStats stats, AttacksSug toPerform, VisualEffect ve)
     {
+        // yield return new WaitForEndOfFrame();
+        // float animationLength = player.animator.GetCurrentAnimatorStateInfo(0).length;
+        //stats.AttackDelay = animationLength;
         yield return new WaitForSeconds(stats.AttackDelay);
         Collider2D[] enemiesHit;
         if (toPerform == AttacksSug.SpecialDefault)
         {
             enemiesHit = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x + stats.range, transform.position.y - 0.8f) * transform.localScale.x, enemyLayer);
-            lazerVE.Play();
         }
         else
         {
-            punchVE.Play();
             enemiesHit = Physics2D.OverlapCircleAll(attackPoint.position, stats.range, enemyLayer);
         }
+        ve.Play();
 
         foreach (Collider2D enemy in enemiesHit)
         {
